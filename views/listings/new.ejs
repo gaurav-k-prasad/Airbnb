@@ -1,0 +1,50 @@
+<% layout("./layouts/boilerplate.ejs") %>
+
+    <body>      
+        <div class="row">
+            <div class="col-md-8 m-auto">
+                <h2 class="mb-3">Create a new listing</h2>
+                <form action="/listings" method="post">
+                    <div class="mb-3">
+                        <label for="title" class="form-label">Title</label>
+                        <!-- ? Here we are making listing as an object and title,... as key value pairs -->
+                        <input type="text" name="listing[title]" placeholder="Title" id="title" required
+                            class="form-control">
+                    </div>
+                    <div class="mb-3">
+                        <label for="description" class="form-label">Description</label>
+                        <textarea name="listing[description]" id="description" class="form-control"
+                            placeholder="Description"></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="image" class="form-label">Image URL</label>
+                        <input type="text" name="listing[image]" class="form-control" placeholder="Image URL"
+                            id="image">
+                    </div>
+
+                    <div class="row">
+                        <div class="mb-3 col-md-5">
+                            <label for="price" class="form-label">Price</label>
+                            <input type="number" name="listing[price]" class="form-control" placeholder="Price" id="price"
+                                min="300" required>
+                        </div>
+                        
+                        <div class="mb-3 col-md-7">
+                            <label for="country" class="form-label">Country</label>
+                            <input type="text" name="listing[country]" class="form-control" id="country"
+                                placeholder="Country" required>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                    <label for="location" class="form-label">Location</label>
+                    <textarea name="listing[location]" class="form-control" id="location" placeholder="Location"
+                        required></textarea>
+                    </div>
+                    
+                    <button class="btn btn-dark">Post</button>
+                </form>
+            </div>
+        </div>
+
+        </div>

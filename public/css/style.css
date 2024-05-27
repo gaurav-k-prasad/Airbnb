@@ -1,0 +1,118 @@
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+:root {
+	--primary-color: #fefff7;
+}
+
+body {
+	width: 100%;
+	min-height: 100vh;
+	background-color: var(--primary-color);
+	display: flex;
+	flex-direction: column;
+}
+
+.container {
+	padding: 1.5rem;
+	flex-grow: 1;
+}
+
+.navbar-collapse {
+	background-color: var(--primary-color);
+}
+
+input,
+textarea {
+	border-radius: 0.3rem;
+	border: 1px solid grey;
+	outline: 0;
+}
+
+.navbar {
+	height: 4rem;
+	background-color: var(--primary-color) !important;
+}
+
+.fa-compass {
+	color: #fe424d;
+	font-size: 2rem;
+}
+
+.nav-link {
+	color: #222 !important;
+	font-weight: 500;
+}
+
+.f-info-links a {
+	text-decoration: none;
+	color: #222;
+}
+
+.f-info-links a:hover {
+	text-decoration: underline;
+	color: black;
+}
+
+.f-info-links,
+.f-info-socials,
+.f-info-brand {
+	width: 100%;
+}
+
+.f-info-socials i {
+	font-size: 1.2rem;
+	margin-right: 1rem;
+}
+
+.f-info {
+	display: flex;
+	text-align: center;
+	height: 7rem;
+	background-color: #ebebeb;
+	flex-wrap: wrap;
+	justify-content: center;
+	align-items: center;
+	align-content: space-evenly;
+	padding: 0.5rem;
+}
+
+.card {
+	border: none;
+	padding: 0;
+	background-color: var(--primary-color);
+	margin-bottom: 1rem;
+}
+
+.card-body {
+	padding: 4px;
+}
+
+.card-text {
+	font-size: 1rem;
+	font-weight: 500;
+}
+
+.card-img-top {
+	width: 100%;
+	object-fit: cover;
+	height: 300px !important;
+}
+
+.card-img-overlay {
+	opacity: 0;
+	background-color: white;
+	transition: all 0.1s;
+}
+
+.card-img-overlay:hover {
+	opacity: 0.2;
+}
+
+
+.show-img {
+	height: 30svh;
+}
