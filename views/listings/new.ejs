@@ -4,17 +4,21 @@
         <div class="row">
             <div class="col-md-8 m-auto">
                 <h2 class="mb-3">Create a new listing</h2>
-                <form action="/listings" method="post">
+                <form action="/listings" method="post" novalidate class="needs-validation">
                     <div class="mb-3">
                         <label for="title" class="form-label">Title</label>
                         <!-- ? Here we are making listing as an object and title,... as key value pairs -->
                         <input type="text" name="listing[title]" placeholder="Title" id="title" required
-                            class="form-control">
+                            class="form-control" maxlength="50">
+                        <div class="invalid-feedback">Give a title in max 50 words</div>
                     </div>
                     <div class="mb-3">
                         <label for="description" class="form-label">Description</label>
                         <textarea name="listing[description]" id="description" class="form-control"
-                            placeholder="Description"></textarea>
+                            placeholder="Description" required></textarea>
+                        <div class="invalid-feedback">
+                            Give a description about rental
+                        </div>
                     </div>
                     <div class="mb-3">
                         <label for="image" class="form-label">Image URL</label>
@@ -26,13 +30,15 @@
                         <div class="mb-3 col-md-5">
                             <label for="price" class="form-label">Price</label>
                             <input type="number" name="listing[price]" class="form-control" placeholder="Price" id="price"
-                                min="300" required>
+                                min="0" required>
+                            <div class="invalid-feedback">The price should be a non-negative number</div>
                         </div>
                         
                         <div class="mb-3 col-md-7">
                             <label for="country" class="form-label">Country</label>
                             <input type="text" name="listing[country]" class="form-control" id="country"
                                 placeholder="Country" required>
+                            <div class="invalid-feedback">Country of rental</div>
                         </div>
                     </div>
 
@@ -40,6 +46,7 @@
                     <label for="location" class="form-label">Location</label>
                     <textarea name="listing[location]" class="form-control" id="location" placeholder="Location"
                         required></textarea>
+                        <div class="invalid-feedback">Address of the place</div>
                     </div>
                     
                     <button class="btn btn-dark">Post</button>

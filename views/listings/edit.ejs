@@ -3,43 +3,54 @@
         <div class="row">
             <div class="col-md-8 m-auto">
                 <h2>Edit listing</h2>
-                <form action="/listings/<%= data._id %>?_method=PUT" method="post">
-                    <div>
+                <form action="/listings/<%= data._id %>?_method=PUT" method="post" novalidate class="needs-validation">
+                    <div class="mb-3">
                         <label for="title" class="form-label">Title</label>
-                        <input type="text" name="listing[title]" class="form-control mb-3" placeholder="Title" id="title" required value="<%= data.title %>">
+                        <input type="text" name="listing[title]" class="form-control" placeholder="Title" id="title"
+                            required value="<%= data.title %>" maxlength="50">
+                        <div class="invalid-feedback">Give a title in max 50 words</div>
                     </div>
-                    
-                    <div>
+
+                    <div class="mb-3">
                         <label for="description" class="form-label">Description</label>
-                        <textarea name="listing[description]" id="description"
-                            class="form-control mb-3" placeholder="Description"><%= data.description %></textarea>
+                        <textarea name="listing[description]" id="description" class="form-control"
+                            placeholder="Description" required><%= data.description %></textarea>
+                        <div class="invalid-feedback">Give a description about rental
+                        </div>
+
                     </div>
-                    
-                    <div>
+
+                    <div class="mb-3">
                         <label for="image" class="form-label">Image URL</label>
-                        <input type="text" name="listing[image]" class="form-control mb-3" placeholder="Image URL" id="image" value="<%= data.image.url %>">
+                        <input type="text" name="listing[image]" class="form-control" placeholder="Image URL" id="image"
+                            value="<%= data.image.url %>" required>
+                        <div class="invalid-feedback">Image is mandatory</div>
+
                     </div>
-                    
+
                     <div class="row">
-                        <div class="col-md-5">
+                        <div class="col-md-5 mb-3">
                             <label for="price" class="form-label">Price</label>
-                            <input type="number" name="listing[price]" class="form-control mb-3" placeholder="Price" id="price" min="300" required
-                                value="<%= data.price %>">
+                            <input type="number" name="listing[price]" class="form-control" placeholder="Price"
+                                id="price" min="0" required value="<%= data.price %>">
+                            <div class="invalid-feedback">The price should be a non-negative number</div>
                         </div>
-                        
-                        <div class="col-md-7">
+
+                        <div class="col-md-7 mb-3">
                             <label for="country" class="form-label">Country</label>
-                            <input type="text" name="listing[country]" id="country" class="form-control mb-3" placeholder="Country" required
-                                value="<%= data.country %>">
+                            <input type="text" name="listing[country]" id="country" class="form-control"
+                                placeholder="Country" required value="<%= data.country %>">
+                            <div class="invalid-feedback">Country of rental</div>
                         </div>
                     </div>
-                    
-                    <div>
+
+                    <div class="mb-3">
                         <label for="location" class="form-label">Location</label>
-                        <textarea name="listing[location]" id="location" class="form-control mb-3" placeholder="Location"
+                        <textarea name="listing[location]" id="location" class="form-control" placeholder="Location"
                             required><%= data.location %> </textarea>
+                        <div class="invalid-feedback">Address of the place</div>
                     </div>
-                    
+
                     <button class="btn btn-outline-danger">Edit your listing</button>
                 </form>
             </div>

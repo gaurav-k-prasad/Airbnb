@@ -28,7 +28,7 @@ const listingSchema = new mongoose.Schema({
 	},
 	price: {
 		type: Number,
-		min: 300,
+		min: 0,
 		required: true,
 	},
 	location: {
