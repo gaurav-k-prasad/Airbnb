@@ -2,6 +2,7 @@
 	margin: 0;
 	padding: 0;
 	box-sizing: border-box;
+	scroll-behavior: smooth;
 }
 
 :root {
@@ -80,7 +81,7 @@ textarea {
 	padding: 0.5rem;
 }
 
-.card {
+.listing-card {
 	border: none;
 	padding: 0;
 	background-color: var(--primary-color);
@@ -112,7 +113,58 @@ textarea {
 	opacity: 0.2;
 }
 
-
 .show-img {
 	height: 30svh;
+}
+
+.rating-stars {
+	color: rgb(244, 244, 43);
+	filter: drop-shadow(0 0px 1px black);
+	user-select: none;
+	/* margin-bottom: 0.3rem;
+	margin-top: -0.5rem; */
+	font-size: 0.8rem;
+	width: fit-content;
+	white-space: nowrap;
+}
+
+.delete-review {
+	width: 3rem;
+	font-size: 0.8rem;
+	height: 1.5rem;
+	padding: 0;
+	display: block;
+	margin: 0.65rem;
+	margin-top: 0.3rem;
+	position: absolute;
+	right: 0;
+	bottom: 0;
+}
+
+.review-card .card-text {
+	margin: 0.3rem 0;
+}
+
+.review-card .card-text::-webkit-scrollbar {
+	width: 3px;
+}
+
+.review-card .card-text::-webkit-scrollbar-track {
+	background: #e4e4e4;
+	border-radius: 10px;
+}
+
+.review-card .card-text::-webkit-scrollbar-thumb {
+	border-radius: 10px;
+	background: #bdbdbd;
+}
+
+.review-card .card-text {
+	max-height: 115px;
+	padding-right: 4px;
+	overflow: auto;
+}
+
+.review-card .card-body {
+	padding-bottom: 2.3rem;
 }

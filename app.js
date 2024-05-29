@@ -6,7 +6,9 @@ const path = require("path");
 const Listing = require("./models/listing.js");
 const wrapAsync = require("./utils/wrapAsync.js");
 const ExpressError = require("./utils/ExpressError.js");
-const { listingSchema } = require("./schema.js");
+const { listingSchema, reviewSchema } = require("./schema.js");
+const Review = require("./models/review.js");
+const review = require("./models/review.js");
 const app = express();
 const port = 3000;
 const MONGO_URL = "mongodb://localhost:27017/wanderlust";
@@ -31,9 +33,23 @@ const validateListing = (req, res, next) => {
 	let { error } = listingSchema.validate(req.body); // - it will identify error but won't stop the program from adding it on the database
 	// Validating schema by joi
 	if (error) {
-		let errorMsg = error.details.map((element) => element.message).join(", ")
+		let errorMessage = error.details
+			.map((element) => element.message)
+			.join(", ");
 		console.dir(error.details);
-		throw new ExpressError(400, errorMsg);
+		throw new ExpressError(400, errorMessage);
+	} else {
+		next();
+	}
+};
+
+const validateReview = (req, res, next) => {
+	let { error } = reviewSchema.validate(req.body);
+	if (error) {
+		let errorMessage = error.details
+			.map((element) => element.message)
+			.join(", ");
+		throw new ExpressError(400, errorMessage);
 	} else {
 		next();
 	}
@@ -63,7 +79,8 @@ app.get(
 	"/listings/:id",
 	wrapAsync(async (req, res, next) => {
 		const { id } = req.params;
-		const data = await Listing.findById(id);
+		const data = await Listing.findById(id).populate("reviews");
+		console.log(data);
 		res.render("./listings/show.ejs", { data });
 	})
 );
@@ -149,6 +166,40 @@ app.delete(
 		const deletedListing = await Listing.findByIdAndDelete(req.params.id);
 		console.log(deletedListing);
 		res.redirect("/listings");
+	})
+);
+
+// Reviews
+app.post(
+	"/listings/:id/reviews",
+	validateReview,
+	wrapAsync(async (req, res, next) => {
+		const listing = await Listing.findById(req.params.id);
+		const newReview = new Review(req.body.review);
+		listing.reviews.push(newReview);
+
+		await newReview.save();
+		await listing.save();
+
+		res.redirect(`/listings/${req.params.id}#review`);
+	})
+);
+
+// Delete Review
+app.delete(
+	"/listings/:id/reviews/:reviewId",
+	wrapAsync(async (req, res, next) => {
+		const { id, reviewId } = req.params;
+		await Review.findByIdAndDelete(reviewId);
+		// ? $pull operator removes all values of array which matches
+
+		await Listing.findByIdAndUpdate(id, { $pull: { reviews: reviewId } });
+		// or
+		// const listing = await Listing.findById(id);
+		// listing.reviews = listing.reviews.filter((element) => {
+		// 	return reviewId != element;
+		// });
+		res.redirect(`/listings/${id}`);
 	})
 );
 

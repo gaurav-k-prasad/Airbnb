@@ -6,7 +6,7 @@
         <div class="row gap-3 m-0">
             <% for (let listing of allListings) { %>
                 <a href="/listings/<%= listing._id %>" class="text-decoration-none flex-grow-1 listing-link p-0" style="width: 18rem;">
-                    <div class="card">
+                    <div class="card listing-card">
                         <img src="<%= listing.image.url %>" class="card-img-top rounded-3" alt="<%=listing.title%>">
                         <div class="card-body">
                             <b><h6 class="card-title">
