@@ -168,3 +168,16 @@ textarea {
 .review-card .card-body {
 	padding-bottom: 2.3rem;
 }
+
+.flash {
+	position: fixed;
+	bottom: 0;
+	right: 0;
+	z-index: 100;
+}
+
+@media (max-width: 576px) {
+	.flash {
+		margin: 0 !important;
+	}
+}

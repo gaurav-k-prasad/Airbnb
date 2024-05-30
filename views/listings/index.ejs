@@ -3,11 +3,11 @@
     <body>
         <h2 class="mb-3">All Listings</h2>
 
-        <div class="row gap-3 m-0">
+        <div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1">
             <% for (let listing of allListings) { %>
-                <a href="/listings/<%= listing._id %>" class="text-decoration-none flex-grow-1 listing-link p-0" style="width: 18rem;">
+                <a href="/listings/<%= listing._id %>" class="text-decoration-none listing-link col col-12">
                     <div class="card listing-card">
-                        <img src="<%= listing.image.url %>" class="card-img-top rounded-3" alt="<%=listing.title%>">
+                        <img src="<%= listing.image.url %>" class="card-img-top rounded-3" alt="<%=listing.title%>" style="height: 20rem;">
                         <div class="card-body">
                             <b><h6 class="card-title">
                                 <%= listing.title %>
