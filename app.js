@@ -7,9 +7,11 @@ const methodOverride = require("method-override");
 const mongoose = require("mongoose");
 const path = require("path");
 const session = require("express-session");
+const warpAsync = require("./utils/wrapAsync.js")
 // * Routes ---------------------------------
-const listings = require("./routes/listing.js");
-const reviews = require("./routes/review.js");
+const listingsRouter = require("./routes/listing.js");
+const reviewsRouter = require("./routes/review.js");
+const usersRouter = require("./routes/user.js")
 // * ----------------------------------------
 // * Authentication require -----------------
 const passport = require("passport");
@@ -77,24 +79,13 @@ main().catch((err) => {
 });
 // =======================================================================
 
-app.get("/demouser", async (req, res) => {
-	// let fakeUser = User({
-	// 	_id: "hello",
-	// 	email: "student@gmail.com",
-	// 	// Automatically adds user by mongoose passport
-	// 	username: "delta-student",
-	// })
-	// res.send(fakeUser)
-
-	// ? params are user, password  
-	// const newUser = await User.register(fakeUser, "helloworld") // -> Register automatically checks if username is unique or not
-})
 
 // =============================== Routers ===============================
 // ? parent route
-app.use("/listings", listings);
+app.use("/listings", listingsRouter);
 // care - here id won't be passed in reviews until we use express.Router({mergeParams: true}) in review.js coz the request params is not being passed in reviews.js in router with merge params it is passing
-app.use("/listings/:id/reviews", reviews);
+app.use("/listings/:id/reviews", reviewsRouter);
+app.use("/", usersRouter);
 // =======================================================================
 
 app.get("/", (req, res) => {

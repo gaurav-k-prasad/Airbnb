@@ -3,6 +3,7 @@ const { listingSchema } = require("../schema.js");
 const wrapAsync = require("../utils/wrapAsync.js");
 const ExpressError = require("../utils/ExpressError.js");
 const Listing = require("../models/listing.js");
+const { isLoggedIn } = require("../middlewares.js");
 
 const router = express.Router({ mergeParams: true });
 
@@ -20,6 +21,7 @@ const validateListing = (req, res, next) => {
 	}
 };
 
+// All Listings
 router.get(
 	"/",
 	wrapAsync(async (req, res, next) => {
@@ -29,8 +31,8 @@ router.get(
 );
 
 // ! Here new has to be written before /listings/:id coz otherwise it'll consider "new" as an id
-// New form
-router.get("/new", (req, res) => {
+// Get New Listing 
+router.get("/new", isLoggedIn, (req, res) => {
 	res.render("./listings/new.ejs");
 });
 
@@ -52,14 +54,13 @@ router.get(
 // Create route
 router.post(
 	"/",
-	validateListing,
+	[isLoggedIn, validateListing],
 	wrapAsync(async (req, res, next) => {
 		// ? Here we are accessing the object listing in new.ejs
 		// const newListing = new Listing(req.body.listing);
 		// newListing.save();
 
 		// What if during post there is nothing like listing in body or description or title is missing but listing object is there
-		const listingData = req.body.listing;
 
 		// ? We can use this method but very tedious
 		// if (!req.body.listing) {
@@ -75,7 +76,6 @@ router.post(
 		// } else if (!listingData.price) {
 		// 	throw new ExpressError(400, "Price missing");
 		// }
-
 		const { title, description, image, price, location, country } =
 			req.body.listing;
 
@@ -89,13 +89,15 @@ router.post(
 		});
 		await newListing.save();
 		req.flash("success", "New Listing Created");
+
 		res.redirect("/listings");
 	})
 );
 
-// Edit route
+// Get Edit route
 router.get(
 	"/:id/edit",
+	isLoggedIn,
 	wrapAsync(async (req, res, next) => {
 		const editListing = await Listing.findById(req.params.id);
 		if (!editListing) {
@@ -107,9 +109,10 @@ router.get(
 	})
 );
 
+// Edit route
 router.put(
 	"/:id",
-	validateListing,
+	[validateListing, isLoggedIn],
 	wrapAsync(async (req, res, next) => {
 		const { title, description, image, price, location, country } =
 			req.body.listing;
@@ -131,8 +134,10 @@ router.put(
 	})
 );
 
+// Delete route
 router.delete(
 	"/:id",
+	isLoggedIn,
 	wrapAsync(async (req, res, next) => {
 		const deletedListing = await Listing.findByIdAndDelete(req.params.id);
 		req.flash("success", "Listing Deleted");

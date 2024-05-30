@@ -181,3 +181,21 @@ textarea {
 		margin: 0 !important;
 	}
 }
+
+.login .form-control.is-valid,
+.login .was-validated .form-control:valid {
+	border: 1px solid rgb(229, 229, 229);
+	background-image: none;
+}
+
+.login-signup-a {
+	color: rgb(121, 121, 121);
+	position: absolute;
+	bottom: 2rem;
+	right: 3rem;
+}
+
+.login-signup-a:hover {
+	color: rgb(61, 61, 61);
+	text-decoration: underline grey !important;
+}
