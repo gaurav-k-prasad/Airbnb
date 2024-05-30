@@ -20,3 +20,10 @@ Look at ./views/layouts/boilerplate for syntax as <%- body %> and in any listing
 
 ### joi is npm package used to validate schema of mongodb so if any required params missing then throw error
 by Joi we declare a schema for joi used for validating
+
+
+### passport -> npm package used for authentication from various sources
+### passport-local -> npm package used for authentication from username, password
+
+### passport-local-mongoose -> npm package used for easier integration with mongodb
+While writing schema for user we can use Schama.plugin(passportLocalMongoose);
