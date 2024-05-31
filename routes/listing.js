@@ -1,25 +1,9 @@
 const express = require("express");
-const { listingSchema } = require("../schema.js");
 const wrapAsync = require("../utils/wrapAsync.js");
-const ExpressError = require("../utils/ExpressError.js");
 const Listing = require("../models/listing.js");
-const { isLoggedIn } = require("../middlewares.js");
+const { isLoggedIn, isOwner, validateListing } = require("../middlewares.js");
 
 const router = express.Router({ mergeParams: true });
-
-const validateListing = (req, res, next) => {
-	let { error } = listingSchema.validate(req.body); // - it will identify error but won't stop the program from adding it on the database
-	// Validating schema by joi
-	if (error) {
-		let errorMessage = error.details
-			.map((element) => element.message)
-			.join(", ");
-		console.dir(error.details);
-		throw new ExpressError(400, errorMessage);
-	} else {
-		next();
-	}
-};
 
 // All Listings
 router.get(
@@ -31,7 +15,7 @@ router.get(
 );
 
 // ! Here new has to be written before /listings/:id coz otherwise it'll consider "new" as an id
-// Get New Listing 
+// Get New Listing
 router.get("/new", isLoggedIn, (req, res) => {
 	res.render("./listings/new.ejs");
 });
@@ -41,7 +25,13 @@ router.get(
 	"/:id",
 	wrapAsync(async (req, res, next) => {
 		const { id } = req.params;
-		const data = await Listing.findById(id).populate("reviews");
+		const data = await Listing.findById(id)
+			// Nesting populate
+			.populate({ path: "reviews", populate: "author" })
+			.populate("owner");
+		data.reviews = data.reviews.map((element) => {
+			return element.populate("author");
+		});
 		if (!data) {
 			req.flash("error", "Listing does not exist!");
 			res.redirect("/listings");
@@ -87,6 +77,7 @@ router.post(
 			location: location,
 			country: country,
 		});
+		newListing.owner = req.user._id;
 		await newListing.save();
 		req.flash("success", "New Listing Created");
 
@@ -97,9 +88,10 @@ router.post(
 // Get Edit route
 router.get(
 	"/:id/edit",
-	isLoggedIn,
+	[isLoggedIn, isOwner],
 	wrapAsync(async (req, res, next) => {
 		const editListing = await Listing.findById(req.params.id);
+
 		if (!editListing) {
 			req.flash("error", "Listing does not exist!");
 			res.redirect("/listings");
@@ -112,11 +104,12 @@ router.get(
 // Edit route
 router.put(
 	"/:id",
-	[validateListing, isLoggedIn],
+	[validateListing, isOwner, isLoggedIn],
 	wrapAsync(async (req, res, next) => {
 		const { title, description, image, price, location, country } =
 			req.body.listing;
-		const editListing = await Listing.findByIdAndUpdate(
+
+		await Listing.findByIdAndUpdate(
 			req.params.id,
 			{
 				title: title,
@@ -137,7 +130,7 @@ router.put(
 // Delete route
 router.delete(
 	"/:id",
-	isLoggedIn,
+	[isLoggedIn, isOwner],
 	wrapAsync(async (req, res, next) => {
 		const deletedListing = await Listing.findByIdAndDelete(req.params.id);
 		req.flash("success", "Listing Deleted");

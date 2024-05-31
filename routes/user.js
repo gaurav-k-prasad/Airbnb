@@ -15,7 +15,7 @@ router.get("/login", (req, res) => {
 router.post(
 	"/signup",
 	saveRedirectUrl,
-	wrapAsync(async (req, res, next) => {
+	async (req, res, next) => {
 		let username;
 		try {
 			let { email, password } = req.body;
@@ -30,6 +30,7 @@ router.post(
 				}
 
 				req.flash("Welcome to WanderLust");
+
 				res.redirect(
 					res.locals.redirectUrl
 						? res.locals.redirectUrl
@@ -37,7 +38,6 @@ router.post(
 				);
 			});
 
-			// res.redirect("/listings");
 		} catch (error) {
 			if (error.name === "UserExistsError") {
 				req.flash(
@@ -51,7 +51,7 @@ router.post(
 			}
 		}
 	})
-);
+;
 
 // ? passport.authenticate("strategy -> local", {options})
 router.post(
@@ -65,7 +65,7 @@ router.post(
 	],
 	wrapAsync(async (req, res, next) => {
 		req.flash("success", "Welcome to WanderLust");
-
+		console.log("res.locals.method :>> ", res.locals.method);
 		res.redirect(
 			res.locals.redirectUrl ? res.locals.redirectUrl : "/listings"
 		);

@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
-const Review = require("./review.js")
+const Review = require("./review.js");
+const User = require("./user.js");
 
 const listingSchema = new mongoose.Schema({
 	title: {
@@ -41,14 +42,19 @@ const listingSchema = new mongoose.Schema({
 		required: true,
 	},
 	reviews: [{ type: mongoose.Schema.Types.ObjectId, ref: "Review" }],
+	owner: {
+		type: mongoose.Schema.Types.ObjectId,
+		required: true,
+		ref: "User",
+	},
 });
 
 // In case the listing is deleted so deleting the reviews
 listingSchema.post("findOneAndDelete", async (listing) => {
-	if (listing){
-		await Review.deleteMany({_id: {$in: listing.reviews}})
+	if (listing) {
+		await Review.deleteMany({ _id: { $in: listing.reviews } });
 	}
-})
+});
 
 const Listing = mongoose.model("Listing", listingSchema);
 module.exports = Listing;

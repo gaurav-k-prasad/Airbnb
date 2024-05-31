@@ -1,8 +1,7 @@
 * {
+	box-sizing: border-box;
 	margin: 0;
 	padding: 0;
-	box-sizing: border-box;
-	scroll-behavior: smooth;
 }
 
 :root {
@@ -10,23 +9,23 @@
 }
 
 body {
-	width: 100%;
-	min-height: 100vh;
 	background-color: var(--primary-color);
 	display: flex;
 	flex-direction: column;
+	min-height: 100vh;
+	width: 100%;
 }
 
 .container {
-	padding: 1.5rem;
 	flex-grow: 1;
+	padding: 1.5rem;
 }
 
 .navbar-collapse {
 	background-color: var(--primary-color);
 	position: absolute;
-	width: 100%;
 	top: 4rem;
+	width: 100%;
 }
 
 input,
@@ -37,8 +36,8 @@ textarea {
 }
 
 .navbar {
-	height: 4rem;
 	background-color: var(--primary-color) !important;
+	height: 4rem;
 }
 
 .navbar-nav {
@@ -52,9 +51,9 @@ textarea {
 }
 
 .left-nav {
+	align-items: center;
 	display: flex;
 	justify-content: center;
-	align-items: center;
 }
 
 .nav-link {
@@ -83,15 +82,14 @@ textarea {
 	}
 }
 
-
 .f-info-links a {
-	text-decoration: none;
 	color: #222;
+	text-decoration: none;
 }
 
 .f-info-links a:hover {
-	text-decoration: underline;
 	color: black;
+	text-decoration: underline;
 }
 
 .f-info-links,
@@ -106,22 +104,22 @@ textarea {
 }
 
 .f-info {
-	display: flex;
-	text-align: center;
-	height: 7rem;
-	background-color: #ebebeb;
-	flex-wrap: wrap;
-	justify-content: center;
-	align-items: center;
 	align-content: space-evenly;
+	align-items: center;
+	background-color: #ebebeb;
+	display: flex;
+	flex-wrap: wrap;
+	height: 7rem;
+	justify-content: center;
 	padding: 0.5rem;
+	text-align: center;
 }
 
 .listing-card {
-	border: none;
-	padding: 0;
 	background-color: var(--primary-color);
+	border: none;
 	margin-bottom: 1rem;
+	padding: 0;
 }
 
 .card-body {
@@ -134,14 +132,14 @@ textarea {
 }
 
 .card-img-top {
-	width: 100%;
-	object-fit: cover;
 	height: 300px !important;
+	object-fit: cover;
+	width: 100%;
 }
 
 .card-img-overlay {
-	opacity: 0;
 	background-color: white;
+	opacity: 0;
 	transition: all 0.1s;
 }
 
@@ -154,30 +152,25 @@ textarea {
 }
 
 .rating-stars {
-	color: rgb(244, 244, 43);
-	filter: drop-shadow(0 0px 1px black);
-	user-select: none;
-	/* margin-bottom: 0.3rem;
-	margin-top: -0.5rem; */
 	font-size: 0.8rem;
-	width: fit-content;
+	user-select: none;
 	white-space: nowrap;
+	width: fit-content;
 }
 
 .delete-review {
-	width: 3rem;
+	display: block;
 	font-size: 0.8rem;
 	height: 1.5rem;
+	margin-left: auto;
+	margin-top: 0.4rem;
+	margin: 0.6rem 0;
 	padding: 0;
-	display: block;
-	margin: 0.65rem;
-	margin-top: 0.3rem;
-	position: absolute;
-	right: 0;
-	bottom: 0;
+	width: 3rem;
 }
 
 .review-card .card-text {
+	margin-bottom: 0.5rem;
 	margin: 0.3rem 0;
 }
 
@@ -191,23 +184,25 @@ textarea {
 }
 
 .review-card .card-text::-webkit-scrollbar-thumb {
-	border-radius: 10px;
 	background: #bdbdbd;
+	border-radius: 10px;
 }
 
 .review-card .card-text {
 	max-height: 115px;
-	padding-right: 4px;
 	overflow: auto;
+	padding-right: 4px;
 }
 
 .review-card .card-body {
-	padding-bottom: 2.3rem;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
 }
 
 .flash {
-	position: fixed;
 	bottom: 0;
+	position: fixed;
 	right: 0;
 	z-index: 100;
 }
@@ -220,14 +215,14 @@ textarea {
 
 .login .form-control.is-valid,
 .login .was-validated .form-control:valid {
-	border: 1px solid rgb(229, 229, 229);
 	background-image: none;
+	border: 1px solid rgb(229, 229, 229);
 }
 
 .login-signup-a {
+	bottom: 2rem;
 	color: rgb(121, 121, 121);
 	position: absolute;
-	bottom: 2rem;
 	right: 3rem;
 }
 
@@ -237,18 +232,18 @@ textarea {
 }
 
 .acc {
-	vertical-align: middle;
-	border: 1px solid rgb(217, 217, 217);
-	padding: 0.35rem 0.5rem;
-	padding-left: 0.8rem;
 	border-radius: 1.5rem;
+	border: 1px solid rgb(217, 217, 217);
 	cursor: pointer;
+	padding-left: 0.8rem;
+	padding: 0.35rem 0.5rem;
 	transition: 0.1s;
+	vertical-align: middle;
 }
 
 .acc .icons {
-	display: flex;
 	align-items: center;
+	display: flex;
 	gap: 0.5rem;
 }
 
@@ -265,29 +260,29 @@ textarea {
 }
 
 .acc .user-bars {
-	font-size: 1.1rem;
 	display: inline-block;
+	font-size: 1.1rem;
 }
 
 .acc .options {
-	position: absolute;
-	border: 1px solid rgb(102, 102, 102);
-	right: 0.8rem;
-	font-size: 1rem;
-	width: 8rem;
-	border-radius: 0.8rem;
-	top: 3.6rem;
 	background-color: rgb(253, 253, 244);
+	border-radius: 0.8rem;
+	border: 1px solid rgb(102, 102, 102);
+	font-size: 1rem;
+	position: absolute;
+	right: 0.8rem;
+	top: 3.6rem;
+	width: 8rem;
 }
 
 .acc .options * {
-	padding: 0.35rem 0.7rem;
+	border-bottom: 1px solid rgb(199, 199, 199);
 	display: inline-block;
+	font-weight: 500;
+	margin: 0;
+	padding: 0.35rem 0.7rem;
 	text-decoration: none;
 	width: 100%;
-	font-weight: 500;
-	border-bottom: 1px solid rgb(199, 199, 199);
-	margin: 0;
 }
 
 .acc .options p {
