@@ -1,15 +1,66 @@
+<link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css' />
 <nav class="navbar navbar-expand-md bg-body-secondary sticky-top border-bottom">
     <div class="container-fluid">
-        <a class="navbar-brand" href="/"><i class="fa-regular fa-compass"></i></a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+
+        <div class="left-nav">
+            <a class="navbar-logo" href="/"><i class="fa-regular fa-compass"></i></a>
+
             <div class="navbar-nav">
                 <a class="nav-link" href="/">Home</a>
                 <a class="nav-link" href="/listings">All Listings</a>
                 <a class="nav-link" href="/listings/new">New Listing</a>
             </div>
         </div>
+
+        <div class="acc">
+            <div class="icons">
+                <i class="fa-solid fa-bars user-bars"></i>
+                <i class="fa-solid fa-circle-user user-icon"></i>
+            </div>
+            <div class="options d-none">
+                <% if (currentUser) { %>
+                    <p>
+                        <%= currentUser.username %>
+                    </p>
+                    <a href="/logout" class="logout">Logout</a>
+                    <% } %>
+                        <% if(!currentUser) { %>
+                            <a href="/login" class="login">Login</a>
+                            <a href="/signup" class="signup">Sign Up</a>
+                            <% } %>
+            </div>
+        </div>
+
     </div>
+
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" href="#">Home</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Features</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Pricing</a>
+            </li>
+
+        </ul>
+    </div>
+
+
+
+
+    </div>
+</nav>
+
+
+
+
+
+
 </nav>

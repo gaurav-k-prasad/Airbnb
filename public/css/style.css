@@ -24,6 +24,9 @@ body {
 
 .navbar-collapse {
 	background-color: var(--primary-color);
+	position: absolute;
+	width: 100%;
+	top: 4rem;
 }
 
 input,
@@ -38,15 +41,48 @@ textarea {
 	background-color: var(--primary-color) !important;
 }
 
+.navbar-nav {
+	justify-content: center;
+}
+
 .fa-compass {
 	color: #fe424d;
-	font-size: 2rem;
+	font-size: 2.4rem;
+	margin: 0 0.5rem;
+}
+
+.left-nav {
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
 
 .nav-link {
 	color: #222 !important;
 	font-weight: 500;
+	padding: 0.4rem 1rem;
 }
+
+.navbar-collapse .nav-link:last-of-type {
+	border-bottom: 1px solid rgb(199, 199, 199);
+}
+
+.navbar-collapse .nav-link {
+	border-bottom: 1px solid rgb(245, 245, 245);
+}
+
+@media (max-width: 768px) {
+	.left-nav .navbar-nav {
+		display: none;
+	}
+}
+
+@media (min-width: 768px) {
+	.navbar-collapse .navbar-nav {
+		display: none;
+	}
+}
+
 
 .f-info-links a {
 	text-decoration: none;
@@ -198,4 +234,74 @@ textarea {
 .login-signup-a:hover {
 	color: rgb(61, 61, 61);
 	text-decoration: underline grey !important;
+}
+
+.acc {
+	vertical-align: middle;
+	border: 1px solid rgb(217, 217, 217);
+	padding: 0.35rem 0.5rem;
+	padding-left: 0.8rem;
+	border-radius: 1.5rem;
+	cursor: pointer;
+	transition: 0.1s;
+}
+
+.acc .icons {
+	display: flex;
+	align-items: center;
+	gap: 0.5rem;
+}
+
+.acc:hover {
+	box-shadow: 0 1px 2px 2px rgb(195, 195, 195);
+}
+
+.acc:has(> .options:hover) {
+	box-shadow: none;
+}
+
+.acc .user-icon {
+	font-size: 1.8rem;
+}
+
+.acc .user-bars {
+	font-size: 1.1rem;
+	display: inline-block;
+}
+
+.acc .options {
+	position: absolute;
+	border: 1px solid rgb(102, 102, 102);
+	right: 0.8rem;
+	font-size: 1rem;
+	width: 8rem;
+	border-radius: 0.8rem;
+	top: 3.6rem;
+	background-color: rgb(253, 253, 244);
+}
+
+.acc .options * {
+	padding: 0.35rem 0.7rem;
+	display: inline-block;
+	text-decoration: none;
+	width: 100%;
+	font-weight: 500;
+	border-bottom: 1px solid rgb(199, 199, 199);
+	margin: 0;
+}
+
+.acc .options p {
+	text-align: center;
+}
+
+.acc .options a:last-of-type {
+	border: 0;
+}
+
+.acc .options a {
+	color: rgb(149, 149, 149);
+}
+
+.acc .options a:hover {
+	color: rgb(94, 94, 94);
 }

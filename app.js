@@ -7,11 +7,10 @@ const methodOverride = require("method-override");
 const mongoose = require("mongoose");
 const path = require("path");
 const session = require("express-session");
-const warpAsync = require("./utils/wrapAsync.js")
 // * Routes ---------------------------------
 const listingsRouter = require("./routes/listing.js");
 const reviewsRouter = require("./routes/review.js");
-const usersRouter = require("./routes/user.js")
+const usersRouter = require("./routes/user.js");
 // * ----------------------------------------
 // * Authentication require -----------------
 const passport = require("passport");
@@ -52,11 +51,6 @@ app.use(methodOverride("_method"));
 // care passport uses session so we don't have to authenticate from other tabs
 app.use(session(sessionOptions));
 app.use(flash());
-app.use((req, res, next) => {
-	res.locals.success = req.flash("success");
-	res.locals.error = req.flash("error");
-	next();
-});
 
 // * Authenticate ------------------------
 app.use(passport.initialize()); // -> Initializes passport
@@ -68,6 +62,14 @@ passport.serializeUser(User.serializeUser());
 // Removing user from the session
 passport.deserializeUser(User.deserializeUser());
 // * -------------------------------------
+
+app.use((req, res, next) => {
+	res.locals.success = req.flash("success");
+	res.locals.error = req.flash("error");
+	console.log(req.user);
+	res.locals.currentUser = req.user;
+	next();
+});
 // =======================================================================
 
 // ============================== Mongo Connect ==========================
@@ -78,7 +80,6 @@ main().catch((err) => {
 	console.error(err);
 });
 // =======================================================================
-
 
 // =============================== Routers ===============================
 // ? parent route
