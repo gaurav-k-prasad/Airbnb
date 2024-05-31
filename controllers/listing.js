@@ -1,4 +1,7 @@
 const Listing = require("../models/listing");
+const mbxGeocoding = require("@mapbox/mapbox-sdk/services/geocoding");
+const mapToken = process.env.MAP_TOKEN;
+const geoCodingClient = mbxGeocoding({ accessToken: mapToken });
 
 module.exports.index = async (req, res, next) => {
 	const allListings = await Listing.find({});
@@ -47,10 +50,23 @@ module.exports.createListing = async (req, res, next) => {
 	// 	throw new ExpressError(400, "Price missing");
 	// }
 
+	let coordinate = await geoCodingClient
+		.forwardGeocode({
+			query: req.body.listing.location + ", " + req.body.listing.country,
+			limit: 1,
+		})
+		.send();
+
+	if (!coordinate.body.features[0]){
+		req.flash("error", "Please enter exact location");
+		return res.redirect("/listings/new");
+	}
+
 	let listing = req.body.listing;
 	listing.image = { filename: req.file.filename, url: req.file.path };
 	const newListing = new Listing(listing);
 	newListing.owner = req.user._id;
+	newListing.geometry = coordinate.body.features[0].geometry;
 	await newListing.save();
 	req.flash("success", "New Listing Created");
 	res.redirect(`/listings/${newListing._id}`);
@@ -65,8 +81,11 @@ module.exports.renderEditForm = async (req, res, next) => {
 	} else {
 		let currImage = editListing.image.url;
 		// Reducing the resolution of image
-		currImage = currImage.replace("/upload", "/upload/h_250,w_300")
-		res.render("./listings/edit.ejs", { data: editListing, currImage: currImage });
+		currImage = currImage.replace("/upload", "/upload/h_250,w_300");
+		res.render("./listings/edit.ejs", {
+			data: editListing,
+			currImage: currImage,
+		});
 	}
 };
 
@@ -74,8 +93,11 @@ module.exports.editListing = async (req, res, next) => {
 	const updateListing = req.body.listing;
 
 	// what if user did not edit image
-	if (req.file){
-		updateListing.image = { filename: req.file.filename, url: req.file.path };
+	if (req.file) {
+		updateListing.image = {
+			filename: req.file.filename,
+			url: req.file.path,
+		};
 	}
 
 	console.log(updateListing, req.file);

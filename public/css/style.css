@@ -304,3 +304,10 @@ textarea {
 .acc .options a:hover {
 	color: rgb(94, 94, 94);
 }
+
+#map {
+	/* position: absolute; */
+	/* bottom: 0; */
+	height: 20rem;
+	width: 100%;
+}

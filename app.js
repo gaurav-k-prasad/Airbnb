@@ -108,6 +108,7 @@ app.all("*", (req, res) => {
 
 app.use((err, req, res, next) => {
 	const { status = 500, message = "Something broke down" } = err;
+	console.log(err);
 	res.status(status).render("error.ejs", { err });
 });
 

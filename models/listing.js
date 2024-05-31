@@ -47,6 +47,17 @@ const listingSchema = new mongoose.Schema({
 		required: true,
 		ref: "User",
 	},
+	geometry: {
+		type: {
+			type: String,
+			enum: ["Point"],
+			required: true,
+		},
+		coordinates: {
+			type: [Number],
+			required: true,
+		},
+	},
 });
 
 // In case the listing is deleted so deleting the reviews

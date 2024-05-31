@@ -42,3 +42,8 @@ https://getbootstrap.com/docs/5.0/forms/validation/#custom-styles
     1. Create a .env file to store enviornment variables and install dotenv npm module that loads env file in proceess
     2. Install "multer", "cloudinary", "multer-storage-cloudinary"
 3. Save this link in MongoDB
+
+---
+### Geocoding -
+Method by which we convert addresses into longitude and latitude
+mapbox provides api for that but we have better mapbox sdk(software development kit) as npm module - @mapbox/mapbox-sdk

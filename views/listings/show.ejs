@@ -1,7 +1,12 @@
 <% layout("/layouts/boilerplate.ejs") %>
+<script>
+    const mapToken = "<%= process.env.MAP_TOKEN %>";
+    let listing = JSON.parse("<%= JSON.stringify(data) %>".replaceAll("&#34;", "\""));
+</script>
+
     <body>
         <div class="row">
-            <div class="col-md-8 m-auto">
+            <div class="col-md-8 m-auto mb-3">
                 <h2>
                     <%= data.title%>
                 </h2>
@@ -119,5 +124,15 @@
                     </div>
                 <% } %>
             </div>
+            
+            <div class="col-md-8 m-auto mb-3">
+                <hr style="opacity: 0.15;">
+                <h3>Where you'll be</h3>
+                <div id="map"></div>
+            </div>
         </div>
+
+        <script src="/js/map.js"></script>
+
+
     </body>
