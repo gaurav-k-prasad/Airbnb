@@ -151,11 +151,8 @@ textarea {
 	height: 30svh;
 }
 
-.rating-stars {
-	font-size: 0.8rem;
-	user-select: none;
-	white-space: nowrap;
-	width: fit-content;
+.starability-result {
+	margin-left: -1.65rem;
 }
 
 .delete-review {
@@ -167,6 +164,10 @@ textarea {
 	margin: 0.6rem 0;
 	padding: 0;
 	width: 3rem;
+}
+
+.review-card {
+	flex-grow: 1;
 }
 
 .review-card .card-text {
@@ -273,6 +274,7 @@ textarea {
 	right: 0.8rem;
 	top: 3.6rem;
 	width: 8rem;
+	z-index: 2;
 }
 
 .acc .options * {
@@ -287,6 +289,8 @@ textarea {
 
 .acc .options p {
 	text-align: center;
+	cursor: auto !important;
+	user-select: none;
 }
 
 .acc .options a:last-of-type {

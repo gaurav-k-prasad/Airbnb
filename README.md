@@ -27,3 +27,6 @@ by Joi we declare a schema for joi used for validating
 
 ### passport-local-mongoose -> npm package used for easier integration with mongodb
 While writing schema for user we can use Schama.plugin(passportLocalMongoose);
+
+### MVC -> Model view controller is a way of structuring the code
+The controller means that all the functions that are going to be perfromed on going to a route will be written in a new file in Controller dir.
