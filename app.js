@@ -7,11 +7,19 @@ const methodOverride = require("method-override");
 const mongoose = require("mongoose");
 const path = require("path");
 const session = require("express-session");
+// * Environment Variables ------------------
+// We require dotenv and run config function
+if (process.env.NODE_ENV != "production") {
+	require("dotenv").config();
+}
+// * ----------------------------------------
+
 // * Routes ---------------------------------
 const listingsRouter = require("./routes/listing.js");
 const reviewsRouter = require("./routes/review.js");
 const usersRouter = require("./routes/user.js");
 // * ----------------------------------------
+
 // * Authentication require -----------------
 const passport = require("passport");
 const LocalStrategy = require("passport-local");
@@ -35,6 +43,7 @@ const sessionOptions = {
 		httpOnly: true,
 	},
 };
+
 // =======================================================================
 
 // ============================== Middlewares ============================
@@ -66,7 +75,6 @@ passport.deserializeUser(User.deserializeUser());
 app.use((req, res, next) => {
 	res.locals.success = req.flash("success");
 	res.locals.error = req.flash("error");
-	console.log(req.user);
 	res.locals.currentUser = req.user;
 	next();
 });

@@ -22,7 +22,6 @@ module.exports.showListing = async (req, res, next) => {
 		req.flash("error", "Listing does not exist!");
 		res.redirect("/listings");
 	}
-	console.log(data);
 	res.render("./listings/show.ejs", { data });
 };
 
@@ -47,22 +46,14 @@ module.exports.createListing = async (req, res, next) => {
 	// } else if (!listingData.price) {
 	// 	throw new ExpressError(400, "Price missing");
 	// }
-	const { title, description, image, price, location, country } =
-		req.body.listing;
 
-	const newListing = new Listing({
-		title: title,
-		description: description,
-		image: { filename: "filename", url: image },
-		price: price,
-		location: location,
-		country: country,
-	});
+	let listing = req.body.listing;
+	listing.image = { filename: req.file.filename, url: req.file.path };
+	const newListing = new Listing(listing);
 	newListing.owner = req.user._id;
 	await newListing.save();
 	req.flash("success", "New Listing Created");
-
-	res.redirect("/listings");
+	res.redirect(`/listings/${newListing._id}`);
 };
 
 module.exports.renderEditForm = async (req, res, next) => {
@@ -72,26 +63,26 @@ module.exports.renderEditForm = async (req, res, next) => {
 		req.flash("error", "Listing does not exist!");
 		res.redirect("/listings");
 	} else {
-		res.render("./listings/edit.ejs", { data: editListing });
+		let currImage = editListing.image.url;
+		// Reducing the resolution of image
+		currImage = currImage.replace("/upload", "/upload/h_250,w_300")
+		res.render("./listings/edit.ejs", { data: editListing, currImage: currImage });
 	}
 };
 
 module.exports.editListing = async (req, res, next) => {
-	const { title, description, image, price, location, country } =
-		req.body.listing;
+	const updateListing = req.body.listing;
 
-	await Listing.findByIdAndUpdate(
-		req.params.id,
-		{
-			title: title,
-			description: description,
-			image: { filename: "filename", url: image },
-			price: price,
-			location: location,
-			country: country,
-		},
-		{ runValidators: true }
-	);
+	// what if user did not edit image
+	if (req.file){
+		updateListing.image = { filename: req.file.filename, url: req.file.path };
+	}
+
+	console.log(updateListing, req.file);
+
+	await Listing.findByIdAndUpdate(req.params.id, updateListing, {
+		runValidators: true,
+	});
 
 	req.flash("success", "Edits Saved");
 	res.redirect(`/listings/${req.params.id}`);
@@ -100,6 +91,5 @@ module.exports.editListing = async (req, res, next) => {
 module.exports.deleteListing = async (req, res, next) => {
 	const deletedListing = await Listing.findByIdAndDelete(req.params.id);
 	req.flash("success", "Listing Deleted");
-	console.log(deletedListing);
 	res.redirect("/listings");
 };

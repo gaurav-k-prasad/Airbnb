@@ -1,9 +1,10 @@
 const Listing = require("./models/listing");
 const { listingSchema, reviewSchema } = require("./schema");
 const ExpressError = require("./utils/ExpressError");
-const Review = require("./models/review.js")
+const Review = require("./models/review.js");
 
 module.exports.isLoggedIn = (req, res, next) => {
+	// console.log(">>", req.body);
 	if (!req.isAuthenticated()) {
 		req.session.redirectUrl = req.originalUrl;
 		req.flash("error", "You must be logged in");
@@ -48,7 +49,7 @@ module.exports.validateListing = (req, res, next) => {
 		console.dir(error.details);
 		throw new ExpressError(400, errorMessage);
 	} else {
-		next();
+		return next();
 	}
 };
 

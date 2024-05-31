@@ -15,7 +15,6 @@ module.exports.signup = async (req, res, next) => {
 		username = req.body.username;
 		const newUser = new User({ email, username });
 		await User.register(newUser, password);
-		console.log(newUser);
 
 		req.login(newUser, (err) => {
 			if (err) {
@@ -41,7 +40,6 @@ module.exports.signup = async (req, res, next) => {
 
 module.exports.login = async (req, res, next) => {
     req.flash("success", "Welcome to WanderLust");
-    console.log("res.locals.method :>> ", res.locals.method);
     res.redirect(
         res.locals.redirectUrl ? res.locals.redirectUrl : "/listings"
     );

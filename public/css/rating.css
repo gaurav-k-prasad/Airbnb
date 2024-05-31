@@ -126,9 +126,6 @@
 	opacity: 1;
 }
 
-.starability-growRotate > input:focus + label {
-}
-
 .starability-growRotate .starability-focus-ring {
 	position: absolute;
 	left: 0;

@@ -1,10 +1,11 @@
 <% layout("./layouts/boilerplate.ejs") %>
 
-    <body>      
+    <body>
         <div class="row">
             <div class="col-md-8 m-auto">
                 <h2 class="mb-3">Create a new listing</h2>
-                <form action="/listings" method="post" novalidate class="needs-validation">
+                <form action="/listings" method="post" novalidate class="needs-validation"
+                    enctype="multipart/form-data">
                     <div class="mb-3">
                         <label for="title" class="form-label">Title</label>
                         <!-- ? Here we are making listing as an object and title,... as key value pairs -->
@@ -21,19 +22,19 @@
                         </div>
                     </div>
                     <div class="mb-3">
-                        <label for="image" class="form-label">Image URL</label>
-                        <input type="text" name="listing[image]" class="form-control" placeholder="Image URL"
-                            id="image">
+                        <label for="image" class='form-label'>Upload Image</label>
+                            <input type="file" name="listing[image]" class="form-control" placeholder="Image URL"
+                                id="image">
                     </div>
 
                     <div class="row">
                         <div class="mb-3 col-md-5">
                             <label for="price" class="form-label">Price</label>
-                            <input type="number" name="listing[price]" class="form-control" placeholder="Price" id="price"
-                                min="0" required>
+                            <input type="number" name="listing[price]" class="form-control" placeholder="Price"
+                                id="price" min="0" required>
                             <div class="invalid-feedback">The price should be a non-negative number</div>
                         </div>
-                        
+
                         <div class="mb-3 col-md-7">
                             <label for="country" class="form-label">Country</label>
                             <input type="text" name="listing[country]" class="form-control" id="country"
@@ -43,12 +44,12 @@
                     </div>
 
                     <div class="mb-3">
-                    <label for="location" class="form-label">Location</label>
-                    <textarea name="listing[location]" class="form-control" id="location" placeholder="Location"
-                        required></textarea>
+                        <label for="location" class="form-label">Location</label>
+                        <textarea name="listing[location]" class="form-control" id="location" placeholder="Location"
+                            required></textarea>
                         <div class="invalid-feedback">Address of the place</div>
                     </div>
-                    
+
                     <button class="btn btn-dark">Post</button>
                 </form>
             </div>
