@@ -1,24 +1,170 @@
 <% layout("/layouts/boilerplate.ejs") %>
 
-    <body>
-        <h2 class="mb-3">All Listings</h2>
+    <style>
+        #filters {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
 
-        <div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1">
+        .all-filters {
+            display: flex;
+            flex-wrap: wrap;
+            text-decoration: none;
+        }
+
+        .filter {
+            text-align: center;
+            margin-right: 2rem;
+            opacity: 0.7;
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+        }
+
+        .filter i {
+            font-size: 1.3rem;
+        }
+
+        .filter p {
+            margin-bottom: 0.2rem;
+        }
+
+        .filter:hover {
+            opacity: 1;
+            border-bottom: 2px solid rgb(177, 177, 177);
+        }
+
+        .tax-info {
+            opacity: 0;
+        }
+
+        .tax-toggle {
+            border: 1px solid rgb(204, 204, 204);
+            padding: 0.8rem 1.5rem;
+            border-radius: 0.5rem;
+        }
+
+        @media (max-width: 992px) {
+            .filter i {
+                display: none;
+            }
+
+            .filter {
+                width: 5.3rem;
+            }
+
+            .filter:hover {
+                border: none;
+            }
+        }
+
+        @media (max-width: 462px) {
+            .filter {
+                display: none;
+            }
+        }
+    </style>
+
+    <body>
+        <div id="filters">
+            <div class="all-filters">
+                <div class="filter">
+                    <div>
+                        <i class="fa-solid fa-fire"></i>
+                    </div>
+                    <p>Trending</p>
+                </div>
+
+                <div class="filter">
+                    <div>
+                        <i class="fa-solid fa-bed"></i>
+                    </div>
+                    <p>Hotels</p>
+                </div>
+
+                <div class="filter">
+                    <div>
+                        <i class="fa-solid fa-mountain-city"></i>
+                    </div>
+                    <p>Iconic Cities</p>
+                </div>
+
+                <div class="filter">
+                    <div>
+                        <i class="fa-brands fa-fort-awesome"></i>
+                    </div>
+                    <p>Castles</p>
+                </div>
+
+                <div class="filter">
+                    <div>
+                        <i class="fa-solid fa-person-swimming"></i>
+                    </div>
+                    <p>Pools</p>
+                </div>
+                <div class="filter">
+                    <div>
+                        <i class="fa-solid fa-tents"></i>
+                    </div>
+                    <p>Camping</p>
+                </div>
+
+                <div class="filter">
+                    <div>
+                        <i class="fa-solid fa-wheat-awn"></i>
+                    </div>
+                    <p>Farms</p>
+                </div>
+
+                <div class="filter">
+                    <div>
+                        <i class="fa-regular fa-snowflake"></i>
+                    </div>
+                    <p>Arctic</p>
+                </div>
+            </div>
+
+            <div class="tax-toggle">
+                <div class="form-check-reverse form-switch">
+                    <input class="form-check-input" style="cursor: pointer;" type="checkbox" role="switch"
+                        id="flexSwitchCheckChecked">
+                    <label class="form-check-label" for="flexSwitchCheckChecked">Include Taxes</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1 mt-3">
             <% for (let listing of allListings) { %>
                 <a href="/listings/<%= listing._id %>" class="text-decoration-none listing-link col col-12">
                     <div class="card listing-card">
-                        <img src="<%= listing.image.url %>" class="card-img-top rounded-3" alt="<%=listing.title%>" style="height: 20rem;">
+                        <img src="<%= listing.image.url %>" class="card-img-top rounded-3" alt="<%=listing.title%>"
+                            style="height: 20rem;">
                         <div class="card-body">
-                            <b><h6 class="card-title">
-                                <%= listing.title %>
-                            </h6></b>
+                            <b>
+                                <h6 class="card-title">
+                                    <%= listing.title %>
+                                </h6>
+                            </b>
                             <div class="card-img-overlay"></div>
                             <p class="card-text">
                                 &#8377; <%= listing.price.toLocaleString("en-IN") %> / night
+                                    <i>+ 18% GST*</i>
                             </p>
                         </div>
                     </div>
                 </a>
                 <% } %>
         </div>
+
+        <script>
+            let taxToggle = document.querySelector('#flexSwitchCheckChecked');
+            let taxInfo = document.querySelectorAll('.listing-card i');
+            taxToggle.addEventListener("click", () => {
+                for (let info of taxInfo) {
+                    info.classList.toggle("tax-info");
+                }
+            })
+        </script>
+
+
     </body>

@@ -238,6 +238,7 @@ textarea {
 	cursor: pointer;
 	padding-left: 0.8rem;
 	padding: 0.35rem 0.5rem;
+	padding-left: 0.75rem;
 	transition: 0.1s;
 	vertical-align: middle;
 }
