@@ -37,20 +37,23 @@ const dbUrl = process.env.ATLASDB_URL;
 const store = MongoStore.create({
 	mongoUrl: dbUrl,
 	crypto: {
-		secret: "mypersonalsecretkey"
+		secret: process.env.SECRET_CODE,
 	},
 	// ? touch after is if session is not updated or user did not do anything then it will be updated only after 24 hours(passing in seconds)
 	touchAfter: 24 * 3600,
-})
+});
 
 store.on("error", (error) => {
-	console.log("------------------- Error in mongo session store -------------------\n", error);
-})
+	console.log(
+		"------------------- Error in mongo session store -------------------\n",
+		error
+	);
+});
 
 const sessionOptions = {
 	// Session information will be stored in dbUrl
 	store,
-	secret: "mypersonalsecretkey",
+	secret: process.env.SECRET_CODE,
 	saveUninitialized: true,
 	resave: false,
 	// the session id age and expire date can be set in cookie option in session
