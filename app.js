@@ -7,6 +7,7 @@ const methodOverride = require("method-override");
 const mongoose = require("mongoose");
 const path = require("path");
 const session = require("express-session");
+const MongoStore = require("connect-mongo");
 // * Environment Variables ------------------
 // We require dotenv and run config function
 if (process.env.NODE_ENV != "production") {
@@ -30,9 +31,26 @@ const User = require("./models/user.js");
 // ============================== Constants ==============================
 const app = express();
 const port = 3000;
-const MONGO_URL = "mongodb://localhost:27017/wanderlust";
+// const MONGO_URL = "mongodb://localhost:27017/wanderlust";
+const dbUrl = process.env.ATLASDB_URL;
+
+const store = MongoStore.create({
+	mongoUrl: dbUrl,
+	crypto: {
+		secret: "mypersonalsecretkey"
+	},
+	// ? touch after is if session is not updated or user did not do anything then it will be updated only after 24 hours(passing in seconds)
+	touchAfter: 24 * 3600,
+})
+
+store.on("error", (error) => {
+	console.log("------------------- Error in mongo session store -------------------\n", error);
+})
+
 const sessionOptions = {
-	secret: "SecretKey",
+	// Session information will be stored in dbUrl
+	store,
+	secret: "mypersonalsecretkey",
 	saveUninitialized: true,
 	resave: false,
 	// the session id age and expire date can be set in cookie option in session
@@ -82,7 +100,7 @@ app.use((req, res, next) => {
 
 // ============================== Mongo Connect ==========================
 async function main() {
-	await mongoose.connect(MONGO_URL);
+	await mongoose.connect(dbUrl);
 }
 main().catch((err) => {
 	console.error(err);

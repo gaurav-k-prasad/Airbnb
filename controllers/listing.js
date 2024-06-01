@@ -100,7 +100,19 @@ module.exports.editListing = async (req, res, next) => {
 		};
 	}
 
-	console.log(updateListing, req.file);
+	let coordinate = await geoCodingClient
+		.forwardGeocode({
+			query: req.body.listing.location + ", " + req.body.listing.country,
+			limit: 1,
+		})
+		.send();
+
+	if (!coordinate.body.features[0]){
+		req.flash("error", "Please enter exact location");
+		return res.redirect(`/listings/${req.params.id}/edit`);
+	}
+	updateListing.geometry = coordinate.body.features[0].geometry;
+
 
 	await Listing.findByIdAndUpdate(req.params.id, updateListing, {
 		runValidators: true,
