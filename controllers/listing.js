@@ -1,7 +1,7 @@
 const Listing = require("../models/listing");
 const mbxGeocoding = require("@mapbox/mapbox-sdk/services/geocoding");
 const mapToken = process.env.MAP_TOKEN;
-const geoCodingClient = mbxGeocoding({ accessToken: mapToken });
+// const geoCodingClient = mbxGeocoding({ accessToken: mapToken });
 
 module.exports.index = async (req, res, next) => {
 	const allListings = await Listing.find({});
@@ -36,20 +36,23 @@ module.exports.createListing = async (req, res, next) => {
 	// What if during post there is nothing like listing in body or description or title is missing but listing object is there
 
 	// ? We can use this method but very tedious
-	// if (!req.body.listing) {
-	// 	throw new ExpressError(400, "Please send valid data for listing");
-	// } else if (!listingData.title) {
-	// 	throw new ExpressError(400, "Title missing");
-	// } else if (!listingData.description) {
-	// 	throw new ExpressError(400, "Description missing");
-	// } else if (!listingData.location) {
-	// 	throw new ExpressError(400, "Location missing");
-	// } else if (!listingData.country) {
-	// 	throw new ExpressError(400, "Country missing");
-	// } else if (!listingData.price) {
-	// 	throw new ExpressError(400, "Price missing");
-	// }
+	/* 
+	if (!req.body.listing) {
+		throw new ExpressError(400, "Please send valid data for listing");
+	} else if (!listingData.title) {
+		throw new ExpressError(400, "Title missing");
+	} else if (!listingData.description) {
+		throw new ExpressError(400, "Description missing");
+	} else if (!listingData.location) {
+		throw new ExpressError(400, "Location missing");
+	} else if (!listingData.country) {
+		throw new ExpressError(400, "Country missing");
+	} else if (!listingData.price) {
+		throw new ExpressError(400, "Price missing");
+	} 
+	*/
 
+	/* 
 	let coordinate = await geoCodingClient
 		.forwardGeocode({
 			query: req.body.listing.location + ", " + req.body.listing.country,
@@ -60,13 +63,14 @@ module.exports.createListing = async (req, res, next) => {
 	if (!coordinate.body.features[0]){
 		req.flash("error", "Please enter exact location");
 		return res.redirect("/listings/new");
-	}
+	} 
+	*/
 
 	let listing = req.body.listing;
 	listing.image = { filename: req.file.filename, url: req.file.path };
 	const newListing = new Listing(listing);
 	newListing.owner = req.user._id;
-	newListing.geometry = coordinate.body.features[0].geometry;
+	// newListing.geometry = coordinate.body.features[0].geometry;
 	await newListing.save();
 	req.flash("success", "New Listing Created");
 	res.redirect(`/listings/${newListing._id}`);
@@ -100,6 +104,7 @@ module.exports.editListing = async (req, res, next) => {
 		};
 	}
 
+	/* 
 	let coordinate = await geoCodingClient
 		.forwardGeocode({
 			query: req.body.listing.location + ", " + req.body.listing.country,
@@ -111,7 +116,8 @@ module.exports.editListing = async (req, res, next) => {
 		req.flash("error", "Please enter exact location");
 		return res.redirect(`/listings/${req.params.id}/edit`);
 	}
-	updateListing.geometry = coordinate.body.features[0].geometry;
+	updateListing.geometry = coordinate.body.features[0].geometry; 
+	*/
 
 
 	await Listing.findByIdAndUpdate(req.params.id, updateListing, {
